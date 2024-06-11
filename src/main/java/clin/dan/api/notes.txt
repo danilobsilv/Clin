@@ -1,0 +1,22 @@
+— @Enumerated em cima de especialidade pq é um enum
+
+— @Embedded em cima de endereco pra ficar em uma classe separada, mas no banco de dados, ele considera que os campos
+dessa classe endereco fazem parte da mesma tabela de medicos
+
+— @Transactional em cima do cadastrarMedico é porque é um método de escrita no BD, então eu preciso ter uma transação
+ativa com o BD
+
+- Para as validações, vamos usar notations
+    -- @NotBlank já valida se não é nulo e nem vazio (É só para Strings)
+    -- @Pattern dá pra inserir expressões regulares
+    -- Como DadosEndereco também é um DTO, usa-se o @Valid, que valida esse DTO que está em um DTO, mas no DadosEndereco
+    também devo passar as notations do validation
+
+- localhost:8081/medico/special-list?size=2&page=1&sort=nome,desc
+    -- O size delimita a quantidade de resposta que virão por requisição
+    -- O page é a paginação
+    -- O sort é o método de ordenação, ele é igual a algum atributo da requisição
+    -- O desc é como deve ser sorted, decrescente ou crescente, o padrão é asc
+    -- no controller, @PageableDefault(size=10, sort={"nome"}) eu uso isso para fazer meu defaults, mas a URL sobrescreve isso
+    -- eu modifiquei no app.properties o nome dos parâmetros, agora a url é:
+        -- localhost:8081/medico/special-list?tamanho=2&pagina=1&ordem=nome,desc
