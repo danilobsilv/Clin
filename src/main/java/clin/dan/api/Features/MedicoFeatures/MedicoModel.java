@@ -28,6 +28,8 @@ public class MedicoModel {
     @Embedded
     private Endereco endereco;
 
+    private boolean ativo;
+
 
     public MedicoModel(DadosCadastroMedicoDTO dados) {
         this.nome = dados.nome();
@@ -36,6 +38,7 @@ public class MedicoModel {
         this.crm = dados.crm();
         this.especialidade = dados.especialidade();
         this.endereco = new Endereco(dados.endereco());
+        this.ativo = true;
 
     }
 
@@ -46,5 +49,9 @@ public class MedicoModel {
             this.endereco.atualizarEndereco(dados.dadosEndereco());
         }
 
+    }
+
+    public void exclusaoLogica() {
+        this.ativo = false;
     }
 }

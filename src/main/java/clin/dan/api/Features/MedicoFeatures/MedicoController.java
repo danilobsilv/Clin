@@ -24,9 +24,16 @@ public class MedicoController{
         System.out.println("Médico inserido!");
     }
 
-    @GetMapping("/doctor-list")
+    @GetMapping("/all-list")
     public Page<DadosListagemMedicosDTO> listarMedicos(@PageableDefault(size=10, sort={"nome"}) Pageable paginacao){
         return repository.findAll(paginacao).map(DadosListagemMedicosDTO::new);
+    }
+
+    @GetMapping("/active-doctors-list")
+    public Page<DadosListagemMedicosDTO> listarMedicosAtivos(@PageableDefault(size=10, sort={"nome"}) Pageable paginacao){
+       return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicosDTO::new);
+    //     existe um padrão de nomenclatura do spring data que se eu criar um método com um determinado padrão de nomenclatura,
+    //     ele consegue montar a query da maneira que eu desejar, daí não vai ser necessário alterar o dto como eu fiz
     }
 
     @PutMapping()
@@ -35,4 +42,18 @@ public class MedicoController{
         var medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
     }
+
+    @DeleteMapping("/del/{medicoId}")
+    @Transactional
+    public void exclusaoMedico(@PathVariable Long medicoId){  // esse aqui vai apagar do banco, de modo literal
+        repository.deleteById(medicoId);
+    }
+
+    @DeleteMapping("exclusaoLogica/{medicoId}")
+    @Transactional
+    public void exclusaoLogicaMedico(@PathVariable long medicoId){
+        var medico = repository.getReferenceById(medicoId);
+        medico.exclusaoLogica();
+    }
+
 }
