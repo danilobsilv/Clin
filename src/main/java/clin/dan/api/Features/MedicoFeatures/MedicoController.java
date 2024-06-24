@@ -21,12 +21,12 @@ public class MedicoController{
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrarMedico(@RequestBody @Valid DadosCadastroMedicoDTO dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DadosDetalhamentoMedicoDTO> cadastrarMedico(@RequestBody @Valid DadosCadastroMedicoDTO dados, UriComponentsBuilder uriBuilder){
         var medico = new MedicoModel(dados);
 
         repository.save(medico);
 
-        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        var uri = uriBuilder.path("/medico/{id}").buildAndExpand(medico.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosDetalhamentoMedicoDTO(medico));
     }
@@ -46,7 +46,7 @@ public class MedicoController{
     }
 
     @GetMapping("/{medicoId}")
-    public ResponseEntity listarMedicosPorId(@PathVariable Long medicoId){
+    public ResponseEntity<DadosDetalhamentoMedicoDTO> listarMedicosPorId(@PathVariable Long medicoId){
         var medico = repository.getReferenceById(medicoId);
         return ResponseEntity.ok(new DadosDetalhamentoMedicoDTO(medico));
     }
@@ -54,7 +54,7 @@ public class MedicoController{
 
     @PutMapping()
     @Transactional
-    public ResponseEntity atualizarMedico(@RequestBody @Valid DadosAtualizacaoMedicoDTO dados){
+    public ResponseEntity<DadosDetalhamentoMedicoDTO> atualizarMedico(@RequestBody @Valid DadosAtualizacaoMedicoDTO dados){
         var medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
         return ResponseEntity.ok(new DadosDetalhamentoMedicoDTO(medico));
@@ -62,14 +62,14 @@ public class MedicoController{
 
     @DeleteMapping("/del/{medicoId}")
     @Transactional
-    public ResponseEntity exclusaoMedico(@PathVariable Long medicoId){  // esse aqui vai apagar do banco, de modo literal
+    public ResponseEntity<MedicoModel> exclusaoMedico(@PathVariable Long medicoId){  // esse aqui vai apagar do banco, de modo literal
         repository.deleteById(medicoId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/exclusaoLogica/{medicoId}")
     @Transactional
-    public ResponseEntity exclusaoLogicaMedico(@PathVariable long medicoId){
+    public ResponseEntity<MedicoModel> exclusaoLogicaMedico(@PathVariable long medicoId){
         var medico = repository.getReferenceById(medicoId);
         medico.exclusaoLogica();
         return ResponseEntity.noContent().build();

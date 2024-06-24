@@ -20,3 +20,11 @@ ativa com o BD
     -- no controller, @PageableDefault(size=10, sort={"nome"}) eu uso isso para fazer meu defaults, mas a URL sobrescreve isso
     -- eu modifiquei no app.properties o nome dos parâmetros, agora a url é:
         -- localhost:8081/medico/special-list?tamanho=2&pagina=1&ordem=nome,desc
+
+- Para dizer ao spring boot que é uma classe que vai tratar erros, usa-se a notation @RestControllerAdvice
+
+- O bean validation quando a validação falha em algum atributo anotado com @NotBlank, a mensagem de erro que ele retorna é: must not be blank.
+    -- Esse tipo de mensagem é padrão do próprio bean, mas se eu quiser personalizar, posso fazer:
+        --- @NotBlank(message = "Email é obrigatório")
+        --- @Email(message = "Formato do email é inválido")
+        --- @Pattern(regexp = "\\d{4,6}", message = "Formato do CRM é inválido")

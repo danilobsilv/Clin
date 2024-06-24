@@ -26,6 +26,30 @@ public class PacienteModel {
     @Embedded
     private Endereco endereco;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
     public PacienteModel(DadosCadastroPacienteDTO dados) {
         this.nome = dados.nome();
         this.email = dados.email();
