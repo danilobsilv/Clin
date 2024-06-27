@@ -1,4 +1,4 @@
-package clin.dan.api.Infra;
+package clin.dan.api.Infra.Errors;
 
 import org.springframework.validation.FieldError;
 

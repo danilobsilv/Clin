@@ -1,4 +1,4 @@
-package clin.dan.api.Infra;
+package clin.dan.api.Infra.Errors;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
