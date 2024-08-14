@@ -1,6 +1,9 @@
 package clin.dan.api.Features.Auth;
 
 import clin.dan.api.Features.Usuario.DadosAuthDTO;
+import clin.dan.api.Features.Usuario.UsuarioModel;
+import clin.dan.api.Infra.Security.DataTokenJwtDTO;
+import clin.dan.api.Infra.Security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +21,16 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authManager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAuthDTO dadosAuthDTO){
-        var token = new UsernamePasswordAuthenticationToken(dadosAuthDTO.login(), dadosAuthDTO.senha());
-        var auth = authManager.authenticate(token);
+        var authToken = new UsernamePasswordAuthenticationToken(dadosAuthDTO.login(), dadosAuthDTO.senha());
+        var auth = authManager.authenticate(authToken);
+        var jwtToken = tokenService.generateToken((UsuarioModel) auth.getPrincipal());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new DataTokenJwtDTO(jwtToken));
 
     }
 }

@@ -6,6 +6,9 @@ dessa classe endereco fazem parte da mesma tabela de medicos
 — @Transactional em cima do cadastrarMedico é porque é um método de escrita no BD, então eu preciso ter uma transação
 ativa com o BD
 
+— Existe um padrão de nomenclatura do spring data que se eu criar um método com um determinado padrão de nomenclatura,
+ele consegue montar a query da maneira que eu desejar, daí não vai ser necessário alterar o dto como eu fiz
+
 - Para as validações, vamos usar notations
     -- @NotBlank já valida se não é nulo e nem vazio (É só para Strings)
     -- @Pattern dá pra inserir expressões regulares

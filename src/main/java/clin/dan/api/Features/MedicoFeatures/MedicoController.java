@@ -39,10 +39,8 @@ public class MedicoController{
 
     @GetMapping("/active-doctors-list")
     public ResponseEntity<Page<DadosListagemMedicosDTO>> listarMedicosAtivos(@PageableDefault(size=10, sort={"nome"}) Pageable paginacao){
-       var list = repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicosDTO::new);
-       return ResponseEntity.ok(list);
-    //     existe um padrão de nomenclatura do spring data que se eu criar um método com um determinado padrão de nomenclatura,
-    //     ele consegue montar a query da maneira que eu desejar, daí não vai ser necessário alterar o dto como eu fiz
+        var list = repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicosDTO::new);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{medicoId}")
@@ -62,7 +60,7 @@ public class MedicoController{
 
     @DeleteMapping("/del/{medicoId}")
     @Transactional
-    public ResponseEntity<MedicoModel> exclusaoMedico(@PathVariable Long medicoId){  // esse aqui vai apagar do banco, de modo literal
+    public ResponseEntity<MedicoModel> exclusaoMedico(@PathVariable Long medicoId){
         repository.deleteById(medicoId);
         return ResponseEntity.noContent().build();
     }
