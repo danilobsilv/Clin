@@ -36,3 +36,19 @@ ele consegue montar a query da maneira que eu desejar, daí não vai ser necess�
   onde o user tem login e senha
   -- Isso é uma configuração
   -- Ela é feita via código, não via properties
+
+- Se eu quiser barrar alguma requisição baseado em role, vou no SecurityConfiguration e adicione mais um requestMatchers seguindo o exemplo abaixo:
+    --  .requestMatchers(HttpMethod.POST, "/login").permitAll()
+    --  .requestMatchers(HttpMethod.DELETE, "/medicos").hasRole("ADMIN")
+    --  .requestMatchers(HttpMethod.DELETE, "/pacientes").hasRole("ADMIN")
+
+- Outra maneira de restringir o acesso a determinadas funcionalidades, com base no perfil dos usuários,
+    é com a utilização de um recurso do Spring Security conhecido como Method Security, que funciona com a utilização de anotações em métodos:
+
+    -- exemplo:
+
+        @GetMapping("/{id}")
+        @Secured("ROLE_ADMIN")
+        public ResponseEntity detalhar(@PathVariable Long id) {
+            var medico = repository.getReferenceById(id);
+            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));}

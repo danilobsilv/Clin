@@ -1,36 +1,25 @@
 package clin.dan.api.Features.Auth;
 
-import clin.dan.api.Features.Usuario.DadosAuthDTO;
-import clin.dan.api.Features.Usuario.UsuarioModel;
+import clin.dan.api.Features.User.AuthDataDTO;
 import clin.dan.api.Infra.Security.DataTokenJwtDTO;
-import clin.dan.api.Infra.Security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authManager;
+    AuthService authService;
 
-    @Autowired
-    private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAuthDTO dadosAuthDTO){
-        var authToken = new UsernamePasswordAuthenticationToken(dadosAuthDTO.login(), dadosAuthDTO.senha());
-        var auth = authManager.authenticate(authToken);
-        var jwtToken = tokenService.generateToken((UsuarioModel) auth.getPrincipal());
-
-        return ResponseEntity.ok(new DataTokenJwtDTO(jwtToken));
-
+    public ResponseEntity<DataTokenJwtDTO> doLogin(@RequestBody @Valid AuthDataDTO authDataDTO){
+        return authService.doLogin(authDataDTO);
     }
 }

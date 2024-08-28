@@ -1,6 +1,6 @@
 package clin.dan.api.Infra.Security;
 
-import clin.dan.api.Features.Usuario.UsuarioModel;
+import clin.dan.api.Features.User.UserModel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -18,14 +18,14 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(UsuarioModel usuarioModel){
+    public String generateToken(UserModel userModel){
         System.out.println(secret);
         try {
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                 .withIssuer("auth0")
-                .withSubject(usuarioModel.getLogin())
-                .withClaim("id", usuarioModel.getId())
+                .withSubject(userModel.getLogin())
+                .withClaim("id", userModel.getId())
                 .withExpiresAt(dataExpiracaoToken())
                 .sign(algorithm);
             }

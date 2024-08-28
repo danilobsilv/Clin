@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/java/clin/dan/api/notes.txt
+src/main/resources/application.properties

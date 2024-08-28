@@ -1,10 +1,13 @@
 package clin.dan.api.Infra.Security;
 
+import clin.dan.api.Features.User.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,26 +19,32 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         var jwtToken = retrieveToken(request);
 
-        var subject = tokenService.getSubject(jwtToken);
+        if (jwtToken != null){
+            var subject = tokenService.getSubject(jwtToken);
+            var user = userRepository.findByLogin(subject);
 
-
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
         filterChain.doFilter(request, response);
-
     }
 
     private String retrieveToken(HttpServletRequest request){
         var authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null){
-            throw new RuntimeException("JWT Token not found in Auth Header.");
+        if (authHeader != null){
+            return authHeader.replace("Bearer", "").trim();
         }
 
-        return authHeader.replace("Bearer", "").trim();
+        return null;
     }
 }
