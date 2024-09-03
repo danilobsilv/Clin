@@ -1,4 +1,6 @@
 package clin.dan.api.Features.Consultation;
 
-public interface ConsultationRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ConsultationRepository extends JpaRepository<ConsultationModel, Long> {
 }

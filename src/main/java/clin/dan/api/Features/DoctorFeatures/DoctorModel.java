@@ -27,38 +27,6 @@ public class DoctorModel {
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getCrm() {
-        return crm;
-    }
-
-    public Specialty getSpecialty() {
-        return specialty;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
     @Embedded
     private Address address;
 
