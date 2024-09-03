@@ -20,13 +20,15 @@ ele consegue montar a query da maneira que eu desejar, daí não vai ser necess�
     -- O page é a paginação
     -- O sort é o método de ordenação, ele é igual a algum atributo da requisição
     -- O desc é como deve ser sorted, decrescente ou crescente, o padrão é asc
-    -- no controller, @PageableDefault(size=10, sort={"nome"}) eu uso isso para fazer meu defaults, mas a URL sobrescreve isso
+    -- no controller, @PageableDefault(size=10, sort={"nome"}) eu uso isso para fazer meu defaults, mas a URL sobrescreve
+        isso
     -- eu modifiquei no app.properties o nome dos parâmetros, agora a url é:
         -- localhost:8081/medico/special-list?tamanho=2&pagina=1&ordem=nome,desc
 
 - Para dizer ao spring boot que é uma classe que vai tratar erros, usa-se a notation @RestControllerAdvice
 
-- O bean validation quando a validação falha em algum atributo anotado com @NotBlank, a mensagem de erro que ele retorna é: must not be blank.
+- O bean validation quando a validação falha em algum atributo anotado com @NotBlank, a mensagem de erro que ele
+   retorna é: must not be blank.
     -- Esse tipo de mensagem é padrão do próprio bean, mas se eu quiser personalizar, posso fazer:
         --- @NotBlank(message = "Email é obrigatório")
         --- @Email(message = "Formato do email é inválido")
@@ -37,13 +39,15 @@ ele consegue montar a query da maneira que eu desejar, daí não vai ser necess�
   -- Isso é uma configuração
   -- Ela é feita via código, não via properties
 
-- Se eu quiser barrar alguma requisição baseado em role, vou no SecurityConfiguration e adicione mais um requestMatchers seguindo o exemplo abaixo:
+- Se eu quiser barrar alguma requisição baseado em role, vou no SecurityConfiguration e adicione mais um requestMatchers
+ seguindo o exemplo abaixo:
     --  .requestMatchers(HttpMethod.POST, "/login").permitAll()
     --  .requestMatchers(HttpMethod.DELETE, "/medicos").hasRole("ADMIN")
     --  .requestMatchers(HttpMethod.DELETE, "/pacientes").hasRole("ADMIN")
 
 - Outra maneira de restringir o acesso a determinadas funcionalidades, com base no perfil dos usuários,
-    é com a utilização de um recurso do Spring Security conhecido como Method Security, que funciona com a utilização de anotações em métodos:
+    é com a utilização de um recurso do Spring Security conhecido como Method Security, que funciona com a utilização de
+    anotações em métodos:
 
     -- exemplo:
 
@@ -52,3 +56,21 @@ ele consegue montar a query da maneira que eu desejar, daí não vai ser necess�
         public ResponseEntity detalhar(@PathVariable Long id) {
             var medico = repository.getReferenceById(id);
             return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));}
+
+- Os nomes dos campos enviados no JSON para a API devem ser idênticos aos nomes dos atributos das classes DTO
+    -- Assim o spring consegue preencher corretamente as informações recebidas.
+    -- Entretanto, pode acontecer de um campo ser enviado no JSON com um nome diferente do atributo definido na classe DTO.
+    Possível solução: Usar @JsonAlias:
+    public record DadosCompra(
+        @JsonAlias(“produto_id”, "idDoProduto") Long idProduto,
+        @JsonAlias(“data_da_compra”) LocalDate dataCompra
+    ){}
+    A anotação @JsonAlias serve para mapear “apelidos” alternativos para os campos que serão recebidos do JSON,
+    sendo possível atribuir múltiplos alias.
+
+- Mudar formato da data:
+    @NotNull
+    @Future
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    LocalDateTime data
+

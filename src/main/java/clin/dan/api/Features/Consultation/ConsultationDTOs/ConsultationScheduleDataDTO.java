@@ -1,5 +1,6 @@
 package clin.dan.api.Features.Consultation.ConsultationDTOs;
 
+import clin.dan.api.Features.DoctorFeatures.Specialty;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,7 +14,9 @@ public record ConsultationScheduleDataDTO(
 
         @NotNull
         @Future
-        LocalDateTime date
+        LocalDateTime date,
+
+        Specialty specialty
 ) {
 
 }
