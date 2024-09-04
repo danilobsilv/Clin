@@ -1,5 +1,6 @@
 package clin.dan.api.Features.Consultation;
 
+import clin.dan.api.Features.Consultation.ConsultationDTOs.CancelScheduledConsultationDTO;
 import clin.dan.api.Features.Consultation.ConsultationDTOs.ConsultationScheduleDataDTO;
 import clin.dan.api.Features.DoctorFeatures.DoctorModel;
 import clin.dan.api.Features.DoctorFeatures.DoctorRepository;
@@ -42,6 +43,14 @@ public class ConsultationRules {
             throw new ValidationErrorException("Specialty is a mandatory information when a doctor isn't chosen.");
         }
             return doctorRepository.chooseRandomFreeDoctorInTheDate(data.specialty(), data.date());
+    }
+
+    public void cancelScheduledConsultation(CancelScheduledConsultationDTO data){
+        if (consultationRepository.existsById(data.consultationId())){
+            throw new ValidationErrorException("Could not find the ID (" + data.consultationId() + ") of this consultation.");
+        };
+
+        var consultation = consultationRepository.getReferenceById(data.consultationId());
     }
 }
 

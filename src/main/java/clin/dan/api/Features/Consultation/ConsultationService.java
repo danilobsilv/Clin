@@ -1,5 +1,6 @@
 package clin.dan.api.Features.Consultation;
 
+import clin.dan.api.Features.Consultation.ConsultationDTOs.CancelScheduledConsultationDTO;
 import clin.dan.api.Features.Consultation.ConsultationDTOs.ConsultationDataDetailsDTO;
 import clin.dan.api.Features.Consultation.ConsultationDTOs.ConsultationScheduleDataDTO;
 import jakarta.validation.Valid;
@@ -16,6 +17,10 @@ public class ConsultationService {
 
     public ResponseEntity<ConsultationDataDetailsDTO> scheduleConsultation(@RequestBody @Valid ConsultationScheduleDataDTO dataDetailsDTO){
         return ResponseEntity.ok(new ConsultationDataDetailsDTO(null, null, null, null ));
-     }
+    }
 
+    public ResponseEntity<CancelScheduledConsultationDTO> cancelScheduledConsultation(@RequestBody @Valid CancelScheduledConsultationDTO data){
+        consultationRules.cancelScheduledConsultation(data);
+        return ResponseEntity.noContent().build();
+    }
 }
