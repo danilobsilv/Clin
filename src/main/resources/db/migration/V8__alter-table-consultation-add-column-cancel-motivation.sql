@@ -1,0 +1,1 @@
+alter table consultation add column cancel_motivation varchar(100);

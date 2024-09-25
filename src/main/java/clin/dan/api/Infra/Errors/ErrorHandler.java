@@ -1,5 +1,6 @@
 package clin.dan.api.Infra.Errors;
 
+import clin.dan.api.Infra.Errors.ValidationErrorException.ValidationErrorException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,11 @@ public class ErrorHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handlerError500(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " +ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(ValidationErrorException.class)
+    public ResponseEntity<String> handleBusinessRule(ValidationErrorException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     private record FieldErrorValidation(String field, String message) {

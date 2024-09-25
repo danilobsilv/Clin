@@ -28,12 +28,12 @@ public class DoctorController {
         return doctorService.registerDoctor(data, uriBuilder);
     }
 
-    @GetMapping("/list/doctors")
+    @GetMapping("/list")
     public ResponseEntity<Page<DoctorListingDataDTO>> listDoctors(@PageableDefault(size=10, sort={"nome"}) Pageable pageable){
         return doctorService.listDoctors(pageable);
     }
 
-    @GetMapping("/list/doctors/active")
+    @GetMapping("/list/active")
     public ResponseEntity<Page<DoctorListingDataDTO>> listActiveDoctors(@PageableDefault(size=10, sort={"nome"}) Pageable pageable){
         return doctorService.listActiveDoctors(pageable);
     }

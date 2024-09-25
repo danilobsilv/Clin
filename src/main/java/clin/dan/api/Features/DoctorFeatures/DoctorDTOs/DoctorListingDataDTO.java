@@ -17,7 +17,7 @@ import clin.dan.api.Features.DoctorFeatures.DoctorModel;
 
 public record DoctorListingDataDTO(
         Long id,
-        String nome,
+        String name,
         String email,
         String crm,
         Specialty specialty
@@ -25,6 +25,6 @@ public record DoctorListingDataDTO(
 
 
     public DoctorListingDataDTO(DoctorModel doctorModel){
-        this(doctorModel.getId(), doctorModel.getNome(), doctorModel.getEmail(), doctorModel.getCrm(), doctorModel.getSpecialty());
+        this(doctorModel.getId(), doctorModel.getName(), doctorModel.getEmail(), doctorModel.getCrm(), doctorModel.getSpecialty());
     }
 }

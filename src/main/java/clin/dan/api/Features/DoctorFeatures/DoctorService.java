@@ -36,8 +36,8 @@ public class DoctorService {
         return ResponseEntity.ok(page);
     }
 
-     public ResponseEntity<Page<DoctorListingDataDTO>> listActiveDoctors(@PageableDefault(size=10, sort={"nome"}) Pageable paginacao){
-        var list = repository.findAllByAtivoTrue(paginacao).map(DoctorListingDataDTO::new);
+     public ResponseEntity<Page<DoctorListingDataDTO>> listActiveDoctors(@PageableDefault(size=10, sort={"nome"}) Pageable pageable){
+        var list = repository.findAllByActiveTrue(pageable).map(DoctorListingDataDTO::new);
 
         return ResponseEntity.ok(list);
     }
@@ -50,7 +50,7 @@ public class DoctorService {
 
     public ResponseEntity<DoctorDetailsDTO> updateDoctor(@RequestBody @Valid UpdateDoctorDTO data){
         var doctor = repository.getReferenceById(data.id());
-        doctor.atualizarInformacoes(data);
+        doctor.updateDoctorInformation(data);
 
         return ResponseEntity.ok(new DoctorDetailsDTO(doctor));
     }
@@ -63,7 +63,7 @@ public class DoctorService {
 
      public ResponseEntity<DoctorModel> doctorLogicalDelete(@PathVariable long doctorId){
         var medico = repository.getReferenceById(doctorId);
-        medico.exclusaoLogica();
+        medico.logicalDelete();
 
         return ResponseEntity.noContent().build();
     }

@@ -18,7 +18,7 @@ public record PatientRegistrationDTO(
 
         @NotBlank
         @Pattern(regexp = "^\\d{11}$")
-        String telefone,
+        String phoneNumber,
 
         @NotBlank
         @Pattern(regexp = "^\\d{11}$")
@@ -26,6 +26,6 @@ public record PatientRegistrationDTO(
 
         @NotNull
         @Valid
-        AddressDataDTO endereco
+        AddressDataDTO address
 ) {
 }

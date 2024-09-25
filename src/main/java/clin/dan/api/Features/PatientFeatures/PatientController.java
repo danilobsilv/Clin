@@ -2,7 +2,7 @@ package clin.dan.api.Features.PatientFeatures;
 
 import clin.dan.api.Features.PatientFeatures.PatientDTO.PatientListingDataDTO;
 import clin.dan.api.Features.PatientFeatures.PatientDTO.PatientRegistrationDTO;
-import clin.dan.api.Features.PatientFeatures.PatientDTO.UpdatePatienteDTO;
+import clin.dan.api.Features.PatientFeatures.PatientDTO.UpdatePatientDTO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class PatientController {
 
     @PutMapping("update")
     @Transactional
-    public ResponseEntity<PatientListingDataDTO> updatePatient(@RequestBody @Valid UpdatePatienteDTO data){
+    public ResponseEntity<PatientListingDataDTO> updatePatient(@RequestBody @Valid UpdatePatientDTO data){
         return patientService.updatePatient(data);
     }
 

@@ -6,15 +6,15 @@ import clin.dan.api.Features.DoctorFeatures.DoctorModel;
 
 public record DoctorDetailsDTO(
         Long id,
-        String nome,
+        String name,
         String email,
         String crm,
-        String telefone,
+        String phoneNumber,
         Specialty specialty,
         Address address) {
 
     public DoctorDetailsDTO(DoctorModel doctorModel){
-        this(doctorModel.getId(), doctorModel.getNome(), doctorModel.getEmail(), doctorModel.getCrm(), doctorModel.getTelefone(), doctorModel.getSpecialty(), doctorModel.getAddress());
+        this(doctorModel.getId(), doctorModel.getName(), doctorModel.getEmail(), doctorModel.getCrm(), doctorModel.getPhone_number(), doctorModel.getSpecialty(), doctorModel.getAddress());
     }
 
 }

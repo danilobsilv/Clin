@@ -24,12 +24,19 @@ public class ConsultationModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
-    private DoctorModel doctor;
+    private DoctorModel doctor_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
-    private PatientModel patient;
+    private PatientModel patient_id;
 
     private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
+    private CancelMotivation cancel_motivation;
+
+    public void cancelConsultation(CancelMotivation cancelMotivation){
+        this.cancel_motivation = cancelMotivation;
+    }
 
 }

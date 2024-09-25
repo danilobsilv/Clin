@@ -1,6 +1,7 @@
 package clin.dan.api;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,32 +13,38 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Address {
 
-    private String logradouro;
-    private String bairro;
+    private String street;
+
+    private String neighborhood;
+
     private String cep;
-    private String numero;
-    private String complemento;
-    private String cidade;
+
+    private String number;
+
+    private String complement;
+
+    private String city;
+
     private String uf;
 
-    public Address(AddressDataDTO endereco) {
-        this.logradouro = endereco.logradouro();
-        this.bairro = endereco.bairro();
-        this.cep = endereco.cep();
-        this.uf = endereco.uf();
-        this.cidade = endereco.cidade();
-        this.numero = endereco.numero();
-        this.complemento = endereco.complemento();
+    public Address(AddressDataDTO address) {
+        this.street = address.city();
+        this.neighborhood = address.neighbourhood();
+        this.cep = address.cep();
+        this.uf = address.uf();
+        this.city = address.city();
+        this.number = address.number();
+        this.complement = address.complement();
     }
 
 
-    public void atualizarEndereco(AddressDataDTO endereco) {
-        if (endereco.logradouro() != null) { this.logradouro = endereco.logradouro();}
-        if (endereco.bairro() != null) { this.bairro = endereco.bairro(); }
-        if (endereco.cep() != null) { this.cep = endereco.cep(); }
-        if (endereco.uf() != null) {this.uf = endereco.uf(); }
-        if (endereco.cidade() != null) {this.cidade = endereco.cidade(); }
-        if (endereco.numero() != null) { this.numero = endereco.numero(); }
-        if (endereco.complemento() != null) { this.complemento = endereco.complemento(); }
+    public void updateAddress(AddressDataDTO address) {
+        if (address.street() != null) { this.street = address.street();}
+        if (address.neighbourhood() != null) { this.neighborhood = address.neighbourhood(); }
+        if (address.cep() != null) { this.cep = address.cep(); }
+        if (address.uf() != null) {this.uf = address.uf(); }
+        if (address.city() != null) {this.city = address.city(); }
+        if (address.number() != null) { this.number = address.number(); }
+        if (address.complement() != null) { this.complement = address.complement(); }
     }
 }

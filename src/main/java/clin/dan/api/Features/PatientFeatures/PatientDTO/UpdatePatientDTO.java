@@ -3,11 +3,11 @@ package clin.dan.api.Features.PatientFeatures.PatientDTO;
 
 import jakarta.validation.constraints.NotNull;
 
-public record UpdatePatienteDTO(
+public record UpdatePatientDTO(
         @NotNull
         Long id,
-        String nome,
+        String name,
         String email,
-        String telefone
+        String phoneNumber
 ) {
 }

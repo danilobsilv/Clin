@@ -11,14 +11,14 @@ import jakarta.validation.constraints.Pattern;
 
 public record InsertDoctorDTO(
         @NotBlank
-        String nome,
+        String name,
 
         @NotBlank
         @Email
         String email,
 
         @NotBlank
-        String telefone,
+        String phoneNumber,
 
         @NotBlank
         @Pattern(regexp = "\\d{4,6}")
@@ -29,5 +29,5 @@ public record InsertDoctorDTO(
 
         @NotNull
         @Valid
-        AddressDataDTO endereco) {
+        AddressDataDTO address) {
 }

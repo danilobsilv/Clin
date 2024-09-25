@@ -4,14 +4,14 @@ import clin.dan.api.Features.PatientFeatures.PatientModel;
 
 public record PatientListingDataDTO(
         Long id,
-        String nome,
+        String name,
         String email,
-        String telefone,
+        String phoneNumber,
         String cpf
 ) {
 
     public PatientListingDataDTO(PatientModel patientModel){
-        this(patientModel.getId(), patientModel.getNome(), patientModel.getEmail(), patientModel.getTelefone(), patientModel.getCpf());
+        this(patientModel.getId(), patientModel.getName(), patientModel.getEmail(), patientModel.getPhone_number(), patientModel.getCpf());
     }
 
 }

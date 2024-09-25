@@ -14,17 +14,20 @@ import java.util.Collection;
 import java.util.List;
 
 @Table(name = "usuarios")
-@Entity(name = "Usuario")
+@Entity(name = "Users")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class UserModel implements UserDetails {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String login;
-    private String senha;
+
+    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { // para controle de permissões, caso haja perfis, como por exemplo de adm, aluno, professor, moderador...
@@ -33,7 +36,7 @@ public class UserModel implements UserDetails {
 
     @Override
     public String getPassword() {
-        return senha;
+        return password;
     }
 
     @Override
