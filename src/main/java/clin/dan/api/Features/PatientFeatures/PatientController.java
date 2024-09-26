@@ -3,6 +3,7 @@ package clin.dan.api.Features.PatientFeatures;
 import clin.dan.api.Features.PatientFeatures.PatientDTO.PatientListingDataDTO;
 import clin.dan.api.Features.PatientFeatures.PatientDTO.PatientRegistrationDTO;
 import clin.dan.api.Features.PatientFeatures.PatientDTO.UpdatePatientDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/patient")
+@SecurityRequirement(name = "bearer-key")
 public class PatientController {
 
     @Autowired

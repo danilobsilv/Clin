@@ -4,6 +4,7 @@ import clin.dan.api.Features.Consultation.ConsultationDTOs.CancelScheduledConsul
 import clin.dan.api.Features.Consultation.ConsultationDTOs.ConsultationDataDetailsDTO;
 import clin.dan.api.Features.Consultation.ConsultationDTOs.ConsultationScheduleDataDTO;
 import clin.dan.api.Features.Consultation.ConsultationDTOs.ScheduledConsultationDetailDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/consultation")
+@SecurityRequirement(name = "bearer-key")
 public class ConsultationController {
 
     @Autowired
