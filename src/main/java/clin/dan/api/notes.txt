@@ -102,3 +102,9 @@ public OpenAPI customOpenAPI() {
                             .name("Apache 2.0")
                             .url("http://voll.med/api/licenca")));
 }
+
+sobre testes:
+- testes de unidade
+- Se eu quiser testar algo da camada de persistência, por exemplo repositórios, usar a notação @DataJpaTest
+- alt + insert: menu de test
+- no consultation controller test, eu não quero que ele use o banco de dados, tem que testar apenas a requisição em si, usando o mockBean. Para o spring não verdadeiramente injetar consultationService

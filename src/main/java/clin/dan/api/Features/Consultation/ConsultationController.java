@@ -14,7 +14,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/consultation")
@@ -24,7 +23,7 @@ public class ConsultationController {
     @Autowired
     ConsultationService consultationService;
 
-    @PostMapping
+    @PostMapping("/schedule")
     @Transactional
     public ResponseEntity<ConsultationDataDetailsDTO> scheduleConsultation(@RequestBody @Valid ConsultationScheduleDataDTO dataDetailsDTO){
         return consultationService.scheduleConsultation(dataDetailsDTO);
