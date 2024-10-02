@@ -54,27 +54,32 @@ class ConsultationControllerTest {
     @Test
     @DisplayName("Should return HTTP code 200 when the data is correct")
     @WithMockUser
-    void scheduleConsultationScenery2() throws Exception{
+    public void scheduleConsultationScenery2() throws Exception{
         var date = LocalDateTime.now().plusHours(2);
         var specialty = Specialty.CARDIOLOGIA;
 
-        var detailedData = new ConsultationDataDetailsDTO(null, 2l, 5l, date);
+        var consultationDetails = new ConsultationDataDetailsDTO(null, 2l, 5l, date);
 
-        when(consultationService.scheduleConsultation(any())).thenReturn(detailedData);
+        when(consultationService.scheduleConsultation(any())).thenReturn(consultationDetails);
 
-        var requestResponse = mockMvc.perform(post("/consultation/schedule")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jacksonTesterScheduleJson.write(
-                                new ConsultationScheduleDataDTO(2l, 5l,date, specialty)
-                        ).getJson()))
+        var response = mockMvc.perform(post("/consultation/schedule")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonTesterScheduleJson.write(
+                        new ConsultationScheduleDataDTO(2l, 5l, date, specialty)
+                ).getJson())
+                )
                 .andReturn().getResponse();
 
-        assertThat(requestResponse.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
         var expectedJson = jacksonTesterReturnJson.write(
-                detailedData
-        ).getClass();
+            consultationDetails
+        ).getJson();
 
-        assertThat(requestResponse.getContentAsString()).isEqualTo(expectedJson);
+        assertThat(response.getContentAsString()).isEqualTo(expectedJson);
+
     }
+
+
+
 }
