@@ -13,6 +13,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -35,7 +36,7 @@ class ConsultationControllerTest {
     private JacksonTester<ConsultationScheduleDataDTO> jacksonTesterScheduleJson;
 
     @Autowired
-    private JacksonTester<ConsultationDataDetailsDTO> jacksonTesterReturnJson;
+    private JacksonTester<ResponseEntity<ConsultationDataDetailsDTO>> jacksonTesterReturnJson;
 
     @MockBean
     private ConsultationService consultationService;
@@ -58,28 +59,23 @@ class ConsultationControllerTest {
         var date = LocalDateTime.now().plusHours(2);
         var specialty = Specialty.CARDIOLOGIA;
 
-        var consultationDetails = new ConsultationDataDetailsDTO(null, 2l, 5l, date);
+        ConsultationDataDetailsDTO consultationDetailsBody = new ConsultationDataDetailsDTO(null, 2L, 5L, date);
 
-        when(consultationService.scheduleConsultation(any())).thenReturn(consultationDetails);
+        when(consultationService.scheduleConsultation(any())).thenReturn(ResponseEntity.ok(consultationDetailsBody));
 
         var response = mockMvc.perform(post("/consultation/schedule")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonTesterScheduleJson.write(
-                        new ConsultationScheduleDataDTO(2l, 5l, date, specialty)
-                ).getJson())
-                )
+                        new ConsultationScheduleDataDTO(2L, 5L, date, specialty)
+                ).getJson()))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
         var expectedJson = jacksonTesterReturnJson.write(
-            consultationDetails
+            ResponseEntity.ok().body(consultationDetailsBody)
         ).getJson();
 
         assertThat(response.getContentAsString()).isEqualTo(expectedJson);
-
     }
-
-
-
 }
